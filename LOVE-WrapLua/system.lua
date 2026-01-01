@@ -7,7 +7,14 @@ else
 end
 
 function love.system.getOS()
-    return "LOVE-WrapLua"
+    --not really "os" but platform
+    if lv1lua.isPSP then
+        return "PSP"
+    elseif lv1lua.mode == "PS3" then
+        return "PS3"
+    else
+        return "Vita"
+    end
 end
 
 function love.system.getLanguage()
