@@ -87,7 +87,7 @@ if lv1luaconf.keyconf == "XB" then
 elseif lv1luaconf.keyconf == "XBA" then
     lv1lua.keyset = {"a","b","x","y","leftshoulder","rightshoulder"}
 elseif lv1luaconf.keyconf == "PS" then
-    lv1lua.keyset = {"circle","cross","triangle","square","l","r"}
+    lv1lua.keyset = {"circle","cross","triangle","square"}
 end
 
 --modules and stuff

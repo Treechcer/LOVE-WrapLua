@@ -49,7 +49,7 @@ function love.graphics.newImage(filename)
         end
         return x,y
     end
-    
+
     return imgWrapper
 end
 
@@ -128,11 +128,23 @@ end
 
 function love.graphics.setColor(r,g,b,a)
     if not a then a = 255 end
-    lv1lua.current.color = color.new(r,g,b,a)
+    if type(r) == "table" then
+        g = r[2]
+        b = r[3]
+        r = r[1]
+        a = a or r[4]
+    end
+    lv1lua.current.color = color.new(r * 255, g * 255, b * 255, a * 255)
 end
 
 function love.graphics.setBackgroundColor(r,g,b)
-    screen.clear(color.new(r,g,b))
+    if type(r) == "table" then
+        g = r[2]
+        b = r[3]
+        r = r[1]
+    end
+
+    screen.clear(color.new(r * 255, g * 255, b * 255))
 end
 
 function love.graphics.rectangle(mode, x, y, w, h)
