@@ -11,13 +11,46 @@ font.setdefault(defaultfont.font)
 lv1lua.current = {font=defaultfont,color=color.new(255,255,255,255)}
 
 function love.graphics.newImage(filename)
-    img = image.load(lv1lua.dataloc.."game/"..filename)
-    
+    local img = image.load(lv1lua.dataloc.."game/"..filename)
+
     if lv1luaconf.imgscale == true then
         image.scale(img,scale*100)
     end
+    local imgWrapper =
+    {
+        imgData = img,
+        flipX = false,
+        flipY = false,
+        getWidth = function(self) return image.getrealw(self.imgData) end,
+        getHeight = function(self) return image.getrealh(self.imgData) end,
+        getDimensions = function(self) return image.getrealh(self.imgData), image.getrealw(self.imgData) end
+    }
+    --Necessary to execute the same behavior from love2d desktop
+    function imgWrapper:__handleNegativeScale(x, y, sx, sy)
+        if(sx > 0 and self.flipX) then
+            image.fliph(self.imgData)
+            self.flipX = not self.flipX
+        elseif(sx < 0 and self.flipX == false) then
+            image.fliph(self.imgData)
+            self.flipX = not self.flipX
+        end
+        if(sy > 0 and self.flipY) then
+            image.flipv(self.imgData)
+            self.flipY = not self.flipY
+        elseif(sy < 0 and self.flipY == false) then
+            image.flipv(self.imgData)
+            self.flipY = not self.flipY
+        end
+        if(sx < 0) then
+            x = x + (self:getWidth() * sx)
+        end
+        if(sy < 0) then
+            y = y + self:getHeight() * sy
+        end
+        return x,y
+    end
     
-    return img
+    return imgWrapper
 end
 
 function love.graphics.draw(drawable,x,y,r,sx,sy)

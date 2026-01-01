@@ -169,19 +169,19 @@ end
 
 
 function love.graphics.newImage(filename)
-    img = image.load(lv1lua.dataloc.."game/"..filename)
+    local img = image.load(lv1lua.dataloc.."game/"..filename)
 
     if lv1luaconf.imgscale == true then
         image.scale(img,scale*100)
     end
-    local imgWrapper = 
+    local imgWrapper =
     {
         imgData = img,
         flipX = false,
         flipY = false,
-        getWidth = function(self)return image.getw(self)end,
-        getHeight = function(self)return image.geth(self)end,
-        getDimensions = function(self) return image.getw(self), image.geth(self)end
+        getWidth = function(self) return image.getrealw(self.imgData) end,
+        getHeight = function(self) return image.getrealh(self.imgData) end,
+        getDimensions = function(self) return image.getrealh(self.imgData), image.getrealw(self.imgData) end
     }
     --Necessary to execute the same behavior from love2d desktop
     function imgWrapper:__handleNegativeScale(x, y, sx, sy)
