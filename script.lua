@@ -150,14 +150,15 @@ elseif not love.keyreleased then
     love.keyreleased = function() end
 end
 
+
 --Main loop
 while lv1lua.running do
     --Draw
     lv1lua.draw()
-    
+
     --Update
     lv1lua.update()
-    
+
     --Controls
     lv1lua.updatecontrols()
 end

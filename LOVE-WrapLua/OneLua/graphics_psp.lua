@@ -167,3 +167,17 @@ end
 function love.graphics.circle(x,y,radius)
     draw.circle(x,y,radius,lv1lua.current.color,30)
 end
+    
+
+function love.graphics.setDefaultFilter(min, mag, anisotropy) -- this only work for billinear on / off, idk if you can do more
+    screen.bilinear(min)
+end
+
+function ___displaySystemInfo()
+    local currRam = math.floor((os.ram() / 1000000) * 100) / 100
+    local totalRam = math.floor((os.totalram() / 1000000) * 100) / 100
+    currRam = totalRam - currRam
+    screen.print(10, 10, "FPS: " .. screen.fps(), 12 / 18.5, color.new(0, 255, 0, 255))
+    screen.print(10, 30, "RAM: " .. currRam .. "/" .. totalRam .. "MB", 12 / 18.5, color.new(0, 255, 0, 255))
+    screen.print(10, 50, "CPU: " .. os.cpu() .. "/444Mhz", 12 / 18.5, color.new(0, 255, 0, 255))
+end
