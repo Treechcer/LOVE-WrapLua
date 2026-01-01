@@ -11,3 +11,5 @@ This is made just for fun and will only have the basic stuff.
 - `index.lua` is for lpp-vita to run `script.lua` (required for lpp-vita only)
 - `app.lua` is for Lua Player PS3 to run `script.lua` (required for Lua Player PS3 only)
 - `lv1luaconf` in `conf.lua` is to set up some settings for key configuration `keyconf`, resolution scale `resscale`, and image scale `imgscale`. This is optional; See `script.lua` for the default values
+
+> Note: this is just changing the behaviour of `LOVE-WrapLua` that I don't like. For most people the original will be better.
