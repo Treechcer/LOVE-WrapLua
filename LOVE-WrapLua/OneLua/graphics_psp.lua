@@ -54,6 +54,8 @@ function love.graphics.newImage(filename)
 end
 
 function love.graphics.draw(drawable,x,y,r,sx,sy)
+    drawable = drawable.imgData
+
     if not x then x = 0 end
     if not y then y = 0 end
     if sx and not sy then sy = sx end

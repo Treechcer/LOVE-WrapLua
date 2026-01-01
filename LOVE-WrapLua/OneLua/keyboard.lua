@@ -11,7 +11,9 @@ function love.keyboard.isDown(key)
         key = "l"
     elseif key == lv1lua.keyset[6] then
         key = "r"
-    end
+    else
+        return false
+    end 
     return buttons.held[key]
 end
 
