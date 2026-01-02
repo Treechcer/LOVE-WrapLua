@@ -31,7 +31,7 @@ function love.graphics.newImage(filename)
         flipY = false,
         getWidth = function(self) return image.getrealw(self.imgData) end,
         getHeight = function(self) return image.getrealh(self.imgData) end,
-        getDimensions = function(self) return image.getrealh(self.imgData), image.getrealw(self.imgData) end
+        getDimensions = function(self) return image.getrealw(self.imgData), image.getrealh(self.imgData) end
     }
     --Necessary to execute the same behavior from love2d desktop
     function imgWrapper:__handleNegativeScale(x, y, sx, sy)
@@ -70,9 +70,9 @@ function love.graphics.draw(drawable,x,y,r,sx,sy)
     if sx and not sy then sy = sx end
     
     --scale 1280x720 to 480x270(psp)
-    if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
-        x = x * scale; y = y * scale
-    end
+    --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
+    --    x = x * scale; y = y * scale
+    --end
     
     if r then
         image.rotate(drawable,(r/math.pi)*180) --radians to degrees
@@ -127,10 +127,10 @@ function love.graphics.print(text,x,y)
     local fontsize = (lv1lua.current.font.size / 18.5) * love.window.scaleY
     
     --scale 1280x720 to 480x270(psp)
-    if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
-        x = x * scale; y = y * scale
-        fontsize = fontsize*fontscale
-    end
+    --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
+    --    x = x * scale; y = y * scale
+    --    fontsize = fontsize*fontscale
+    --end
     
     if text then
         screen.print(lv1lua.current.font.font,x,y,text,fontsize,lv1lua.current.color)
@@ -159,15 +159,15 @@ function love.graphics.setBackgroundColor(r,g,b)
 end
 
 function love.graphics.rectangle(mode, x, y, w, h)
-    --scale 1280x720 to 480x270(psp)
-    if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
-        x = x * scale; y = y * scale; w = w * scale; h = h * scale
-    end
-    
     x = sxF(x)
     y = syF(y)
-    w = sxF(w)
-    h = syF(h)
+    --w = sxF(w)
+    --h = syF(h)
+    
+    --scale 1280x720 to 480x270(psp)
+    --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
+    --    x = x * scale; y = y * scale; w = w * scale; h = h * scale
+    --end
 
     if mode == "fill" then
         draw.fillrect(x, y, w, h, lv1lua.current.color)
