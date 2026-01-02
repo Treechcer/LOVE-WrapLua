@@ -80,8 +80,7 @@ function love.graphics.draw(drawable,x,y,r,sx,sy)
     
     if sx then
         sy = sy or sx
-        image.resiz(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy
-        )
+        image.resize(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy)
     end
     
     if drawable then
@@ -128,10 +127,10 @@ function love.graphics.print(text,x,y)
     local fontsize = (lv1lua.current.font.size / 18.5) * love.window.scaleY
     
     --scale 1280x720 to 480x270(psp)
-    --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
-    --    x = x * scale; y = y * scale
-    --    fontsize = fontsize*fontscale
-    --end
+    if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
+        x = x * scale; y = y * scale
+        fontsize = fontsize*fontscale
+    end
     
     if text then
         screen.print(lv1lua.current.font.font,x,y,text,fontsize,lv1lua.current.color)
@@ -161,14 +160,14 @@ end
 
 function love.graphics.rectangle(mode, x, y, w, h)
     --scale 1280x720 to 480x270(psp)
-    --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
-    --    x = x * scale; y = y * scale; w = w * scale; h = h * scale
-    --end
+    if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
+        x = x * scale; y = y * scale; w = w * scale; h = h * scale
+    end
     
     x = sxF(x)
-    y = syF(x)
-    w = sxF(x)
-    h = syF(x)
+    y = syF(y)
+    w = sxF(w)
+    h = syF(h)
 
     if mode == "fill" then
         draw.fillrect(x, y, w, h, lv1lua.current.color)

@@ -20,6 +20,7 @@ love.math = {}
 love.system = {}
 love.filesystem = {}
 love.keyboard = {}
+love.window = {}
 
 --for checking conf files
 function lv1lua.exists(file)
@@ -91,9 +92,11 @@ elseif lv1luaconf.keyconf == "PS" then
 end
 
 --modules and stuff
+dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/window.lua")
 if lv1lua.isPSP then
     dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/graphics_psp.lua")
-    dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/window.lua")
+    love.window.realWidth  = 480
+    love.window.realHeight = 272
 else
     dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/graphics.lua")
 end
