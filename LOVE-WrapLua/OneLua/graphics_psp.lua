@@ -67,8 +67,15 @@ function love.graphics.draw(drawable,x,y,r,sx,sy)
     x = sxF(x or 0)
     y = syF(y or 0)
 
-    if sx and not sy then sy = sx end
-    
+    sx = sx or 1
+    sy = sy or sx
+
+    local finalScaleX = sx * love.window.scaleX
+    local finalScaleY = sy * love.window.scaleY
+    local finalW = image.getrealw(drawable) * finalScaleX
+    local finalH = image.getrealh(drawable) * finalScaleY
+    image.resize(drawable, finalW, finalH)
+
     --scale 1280x720 to 480x270(psp)
     --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
     --    x = x * scale; y = y * scale
@@ -78,10 +85,10 @@ function love.graphics.draw(drawable,x,y,r,sx,sy)
         image.rotate(drawable,(r/math.pi)*180) --radians to degrees
     end
     
-    if sx then
-        sy = sy or sx
-        image.resize(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy)
-    end
+    --if sx then
+    --    sy = sy or sx
+    --    image.resize(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy)
+    --end
     
     if drawable then
         image.blit(drawable,x,y,color.a(lv1lua.current.color))
@@ -161,9 +168,9 @@ end
 function love.graphics.rectangle(mode, x, y, w, h)
     x = sxF(x)
     y = syF(y)
-    --w = sxF(w)
-    --h = syF(h)
-    
+    w = sxF(w)
+    h = syF(h)
+
     --scale 1280x720 to 480x270(psp)
     --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
     --    x = x * scale; y = y * scale; w = w * scale; h = h * scale
