@@ -3,6 +3,14 @@ local defaultfont
 local scale = 0.375
 local fontscale = 0.6
 
+local function sxF(x)
+    return x * love.window.scaleX
+end
+
+local function syF(y)
+    return y * love.window.scaleY
+end
+
 --default print font
 defaultfont = {font=font.load("oneFont.pgf"),size=15}
 font.setdefault(defaultfont.font)
@@ -56,8 +64,9 @@ end
 function love.graphics.draw(drawable,x,y,r,sx,sy)
     drawable = drawable.imgData
 
-    if not x then x = 0 end
-    if not y then y = 0 end
+    x = sxF(x or 0)
+    y = syF(y or 0)
+
     if sx and not sy then sy = sx end
     
     --scale 1280x720 to 480x270(psp)
@@ -70,7 +79,9 @@ function love.graphics.draw(drawable,x,y,r,sx,sy)
     end
     
     if sx then
-        image.resize(drawable,image.getrealw(drawable)*sx,image.getrealh(drawable)*sy)
+        sy = sy or sx
+        image.resiz(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy
+        )
     end
     
     if drawable then
@@ -111,15 +122,16 @@ function love.graphics.setFont(setfont,setsize)
 end
 
 function love.graphics.print(text,x,y)
-    local fontsize = lv1lua.current.font.size/18.5
-    if not x then x = 0 end
-    if not y then y = 0 end
+    x = sxF(x or 0)
+    y = syF(y or 0)
+
+    local fontsize = (lv1lua.current.font.size / 18.5) * love.window.scaleY
     
     --scale 1280x720 to 480x270(psp)
-    if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
-        x = x * scale; y = y * scale
-        fontsize = fontsize*fontscale
-    end
+    --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
+    --    x = x * scale; y = y * scale
+    --    fontsize = fontsize*fontscale
+    --end
     
     if text then
         screen.print(lv1lua.current.font.font,x,y,text,fontsize,lv1lua.current.color)
@@ -149,10 +161,15 @@ end
 
 function love.graphics.rectangle(mode, x, y, w, h)
     --scale 1280x720 to 480x270(psp)
-    if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
-        x = x * scale; y = y * scale; w = w * scale; h = h * scale
-    end
+    --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
+    --    x = x * scale; y = y * scale; w = w * scale; h = h * scale
+    --end
     
+    x = sxF(x)
+    y = syF(x)
+    w = sxF(x)
+    h = syF(x)
+
     if mode == "fill" then
         draw.fillrect(x, y, w, h, lv1lua.current.color)
     elseif mode == "line" then
@@ -180,4 +197,12 @@ function ___displaySystemInfo()
     screen.print(10, 10, "FPS: " .. screen.fps(), 12 / 18.5, color.new(0, 255, 0, 255))
     screen.print(10, 30, "RAM: " .. currRam .. "/" .. totalRam .. "MB", 12 / 18.5, color.new(0, 255, 0, 255))
     screen.print(10, 50, "CPU: " .. os.cpu() .. "/444Mhz", 12 / 18.5, color.new(0, 255, 0, 255))
+end
+
+function love.graphics.getWidth()
+    return love.window.width
+end
+
+function love.graphics.getHeight()
+    return love.window.height
 end

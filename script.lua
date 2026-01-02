@@ -93,6 +93,7 @@ end
 --modules and stuff
 if lv1lua.isPSP then
     dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/graphics_psp.lua")
+    dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/window.lua")
 else
     dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/graphics.lua")
 end
