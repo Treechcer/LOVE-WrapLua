@@ -12,3 +12,8 @@ end
 function love.timer.getDelta()
     return dt
 end
+
+
+function love.timer.getFPS()
+    return screen.fps()
+end
