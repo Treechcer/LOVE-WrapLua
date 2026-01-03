@@ -112,6 +112,20 @@ function love.graphics.newFont(setfont, setsize)
         font = setfont;
         size = setsize;
     }
+
+    function table:getHeight()
+        local scale = (self.size / 18.5) * love.window.scaleY
+        return 18.5 * scale
+    end
+
+    function table:getWidth(text)
+        text = tostring(text or "")
+        local scale = (self.size / 18.5) * love.window.scaleY
+
+        local charWidth = 9
+        return (#text * charWidth) * scale
+    end
+
     return table
 end
 
