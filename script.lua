@@ -93,6 +93,7 @@ end
 
 --modules and stuff
 dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/window.lua")
+dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/joystick.lua")
 if lv1lua.isPSP then
     dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/graphics_psp.lua")
     love.window.realWidth  = 480
