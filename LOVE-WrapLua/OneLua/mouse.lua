@@ -4,7 +4,7 @@ love.mouse = {
     _lastY = 0
 }
 
-love.mousepressed = function(x,y,button)end
+love.mousepressed = function(x,y,button, istouch, presses)end
 
 love.mouse.getX = function()
     return love.mouse._lastX

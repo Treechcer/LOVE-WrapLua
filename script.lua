@@ -118,10 +118,17 @@ end
 if lv1lua.mode == "OneLua" then
     __oldRequire = require
     function require(param)
+        if param == "love" then
+            return love
+        end
         return __oldRequire("game/"..param)
     end
 else
     function require(param)
+        if param == "love" then
+            return love
+        end
+        
         if string.sub(param, -4) == ".lua" then
             param = lv1lua.dataloc.."game/"..param
         else
