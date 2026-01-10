@@ -61,28 +61,37 @@ function love.graphics.newImage(filename)
     return imgWrapper
 end
 
-function love.graphics.draw(drawable,x,y,r,sx,sy)
-    drawable = drawable.imgData
+function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
+    local temporaryImg = drawable.imgData
+
+    if not temporaryImg then
+        return
+    end
 
     x = sxF(x or 0)
     y = syF(y or 0)
 
     sx = sx or 1
     sy = sy or sx
+    r = r or 0
+    ox = ox or 0
+    oy = oy or 0
 
     local finalScaleX = sx * love.window.scaleX
     local finalScaleY = sy * love.window.scaleY
-    local finalW = image.getrealw(drawable) * finalScaleX
-    local finalH = image.getrealh(drawable) * finalScaleY
-    image.resize(drawable, finalW, finalH)
+    local finalW = image.getrealw(temporaryImg) * finalScaleX
+    local finalH = image.getrealh(temporaryImg) * finalScaleY
+
+    image.resize(temporaryImg, finalW, finalH)
+
+    image.center(temporaryImg, ox, oy)
 
     --scale 1280x720 to 480x270(psp)
     --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
     --    x = x * scale; y = y * scale
     --end
-    
-    if r then
-        image.rotate(drawable,(r/math.pi)*180) --radians to degrees
+    if r ~= 0 then
+        image.rotate(temporaryImg,(r/math.pi)*180) --radians to degrees
     end
     
     --if sx then
@@ -90,9 +99,7 @@ function love.graphics.draw(drawable,x,y,r,sx,sy)
     --    image.resize(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy)
     --end
     
-    if drawable then
-        image.blit(drawable,x,y,color.a(lv1lua.current.color))
-    end
+    image.blit(temporaryImg,x,y,color.a(lv1lua.current.color))
 end
 
 function love.graphics.newFont(setfont, setsize)
