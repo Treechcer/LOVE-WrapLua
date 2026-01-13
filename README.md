@@ -12,4 +12,6 @@ This is made just for fun and will only have the basic stuff.
 - `app.lua` is for Lua Player PS3 to run `script.lua` (required for Lua Player PS3 only)
 - `lv1luaconf` in `conf.lua` is to set up some settings for key configuration `keyconf`, resolution scale `resscale`, and image scale `imgscale`. This is optional; See `script.lua` for the default values
 
-> Note: this is just changing the behaviour of `LOVE-WrapLua` that I don't like. For most people the original will be better.
+## Fork README.md
+
+I'm trying to make the original library work better and work for most of hte stuff. For now I'm focusing on PSP because I don't have access to PS3 and PS Vita for now (+ the original documentation doesn't really show how to make PS3 and PS Vita versions sadly which I'll have to figure out and document), also the PSP version seems kinda lacking from all the other versions (I haven't look into them for now).
