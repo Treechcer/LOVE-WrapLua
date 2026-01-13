@@ -32,7 +32,8 @@ For this you have to:
 
 Recommendation:
 
-- having [eboot.pdp unpacket](https://github.com/PSP-Archive/pbp-unpacker) to unpack the included pdp so you can have your own image, name etc. on your PSP home screen (XMB).
+- having [pdp unpacket](https://github.com/PSP-Archive/pbp-unpacker) to unpack the included pdp so you can have your own image, name etc. on your PSP home screen (XMB).
+- having [PARAM SFO EDITOR](https://www.gamebrew.org/wiki/SFO_Editor_PSP) to change the name and icons for your PSP game.
 - this will be expanded...
 
 ### Set up
@@ -68,3 +69,23 @@ Folder for LOVE-WrapLua should be the folder in this repository called the same 
 savedata\ should be initially empty folder (if you write files it saves it there).
 
 When you have modded PSP on your SD card you should see this folder folders like `PSP\GAME\...`, where you'll put your game folder. Which will be `PSP\GAME\your-game`. When you add your game it should be on your XMB and it should work.
+
+### custom eboot.pbp
+
+If you don't want to have the DDLC eboot.pbp you have to creat your own or customize the DDLC one. I think it's easier to customize the eboot.pbp. You'll have to have app called `pbp-unpacker` which is in recommended list and `ebott.pbp` you want to customize. Go to your pbp-unpacker and click on button `open` and select the the fole for the eboot.pbp you want to unpack and then customize, then click on `extract` and select where you want to sve it. Now you have this finished you have to update the `param.sfo` file, in app like `param sfo editor` in recommended apps again. You can use some of the templates in the app or the one from DDLC which you extracted. Your param sfo HAS to have at least this parameters:
+
+- BOOTABLE - 1
+- CATEGORy - MG
+- DISC_ID - unique ID for your game wich includes region ULE (EU), UCUS (USA) etc. and 5 other digits. So something like ULE12345 etc.
+- DISC_VERSION - 1.00
+- MEMSIZE - 1
+- PARENTAL_LEVEL - 1
+- PSP_SYSTEM_VER - 1.00
+- REGION - 32768
+- TITLE - your-game
+
+> NOTE: I don't know what most things do, so you'll have to read on it if you want to know, if this will have any issues, I'll fix it later but this worked for me.
+
+After this you can save your param.sfo anywhere you'll find it again.
+
+Now you should open `pbp-unpacker` to make your own .pbp and be able to play your game and have correct things on your XMB (name, icons etc.). Click on `New` and add your .sfo file you've just made to `param.sfo`. Take the `DATA.PSP` from the DDLC project, I don't know how to make my own and it worked with that file so it's fine. Now you can add your icon to `ICON0.png` which has resolution of 144x80 and for background image you are adding it into `PIC1.png` which has resolution of 480x272. I don't know what other files but when I'll know I'll edit this part but even without any more files it can run and works as it should. Now you can click `save` and have your custom eboot.pbp.
