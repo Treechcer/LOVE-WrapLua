@@ -34,3 +34,37 @@ Recommendation:
 
 - having [eboot.pdp unpacket](https://github.com/PSP-Archive/pbp-unpacker) to unpack the included pdp so you can have your own image, name etc. on your PSP home screen (XMB).
 - this will be expanded...
+
+### Set up
+
+First, you have to set up your game folder. You have to have this structure:
+```
+game\
+LOVE-WrapLua\
+savedata\
+EBOOT.PBP
+oneFont.pgf
+script.lua
+```
+
+game folder => your game.
+
+>NOTE: main.lua and conf.lua ARE necessary, your game HAS to have them.
+
+minimalistic conf.lua (this is the minimum):
+
+```lua
+function love.conf(t)
+    t.identity = "your-game-name"
+end
+```
+
+and your main.lua should have love.load(), love.update(dt) and love.graphics() and any other game logic.
+
+> NOTE: you can use more files, any kind of files you work with your game can be there this library can work with images from default, any other file type you have to write and work with.
+
+Folder for LOVE-WrapLua should be the folder in this repository called the same (or your changed version of course or any other forks that exist).
+
+savedata\ should be initially empty folder (if you write files it saves it there).
+
+When you have modded PSP on your SD card you should see this folder folders like `PSP\GAME\...`, where you'll put your game folder. Which will be `PSP\GAME\your-game`. When you add your game it should be on your XMB and it should work.
