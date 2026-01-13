@@ -31,7 +31,8 @@ function love.graphics.newImage(filename)
         flipY = false,
         getWidth = function(self) return image.getrealw(self.imgData) end,
         getHeight = function(self) return image.getrealh(self.imgData) end,
-        getDimensions = function(self) return image.getrealw(self.imgData), image.getrealh(self.imgData) end
+        getDimensions = function(self) return image.getrealw(self.imgData), image.getrealh(self.imgData) end,
+        filename = filename
     }
     --Necessary to execute the same behavior from love2d desktop
     function imgWrapper:__handleNegativeScale(x, y, sx, sy)
@@ -62,7 +63,7 @@ function love.graphics.newImage(filename)
 end
 
 function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
-    local temporaryImg = drawable.imgData
+    local temporaryImg = drawable
 
     if not temporaryImg then
         return
@@ -70,6 +71,10 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
 
     x = sxF(x or 0)
     y = syF(y or 0)
+
+    --if sy ~= nil or sx ~= nil or r ~= nil or ox ~= nil or ox ~= nil then
+    --    temporaryImg = love.graphics.newImage(drawable.filename)
+    --end
 
     sx = sx or 1
     sy = sy or sx
@@ -79,19 +84,19 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
 
     local finalScaleX = sx * love.window.scaleX
     local finalScaleY = sy * love.window.scaleY
-    local finalW = image.getrealw(temporaryImg) * finalScaleX
-    local finalH = image.getrealh(temporaryImg) * finalScaleY
+    local finalW = drawable:getWidth() * finalScaleX
+    local finalH = drawable:getHeight() * finalScaleY
 
-    image.resize(temporaryImg, finalW, finalH)
+    image.resize(temporaryImg.imgData, finalW, finalH)
 
-    image.center(temporaryImg, ox, oy)
+    image.center(temporaryImg.imgData, ox, oy)
 
     --scale 1280x720 to 480x270(psp)
     --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
     --    x = x * scale; y = y * scale
     --end
     if r ~= 0 then
-        image.rotate(temporaryImg,(r/math.pi)*180) --radians to degrees
+        image.rotate(temporaryImg.imgData,(r/math.pi)*180) --radians to degrees
     end
     
     --if sx then
@@ -99,7 +104,7 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
     --    image.resize(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy)
     --end
     
-    image.blit(temporaryImg,x,y,color.a(lv1lua.current.color))
+    image.blit(temporaryImg.imgData,x,y,color.a(lv1lua.current.color))
 end
 
 function love.graphics.newFont(setfont, setsize)
