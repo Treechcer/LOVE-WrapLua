@@ -54,6 +54,12 @@ if lv1lua.exists(lv1lua.dataloc.."game/conf.lua") then
 end
 t = nil
 
+if lv1lua.cleanUp == nil then
+    lv1lua.cleanUp = 2500
+end
+
+lv1lua.lastClean = 0
+
 if not lv1luaconf then
     --lv1luaconf, custom configs should go to lv1lua.lua
     lv1luaconf = {
@@ -109,6 +115,7 @@ dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/keyboard.lua")
 dofile(lv1lua.dataloc.."LOVE-WrapLua/filesystem.lua")
 dofile(lv1lua.dataloc.."LOVE-WrapLua/math.lua")
 dofile(lv1lua.dataloc.."LOVE-WrapLua/system.lua")
+dofile(lv1lua.dataloc.."LOVE-WrapLua/helperFunctions.lua")
 
 --return LOVE 0.10.2
 function love.getVersion()
@@ -173,4 +180,11 @@ while lv1lua.running do
 
     --Controls
     lv1lua.updatecontrols()
+
+    if lv1lua.lastClean >= lv1lua.cleanUp then
+        graphicsCleanUp()
+        lv1lua.lastClean = 0
+    end
+
+    lv1lua.lastClean = lv1lua.lastClean + 1
 end
