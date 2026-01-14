@@ -3,6 +3,8 @@ local defaultfont
 local scale = 0.375
 local fontscale = 0.6
 
+love.graphicsCache = {}
+
 local function sxF(x)
     return x * love.window.scaleX
 end
@@ -73,7 +75,7 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
     y = syF(y or 0)
 
     --if sy ~= nil or sx ~= nil or r ~= nil or ox ~= nil or ox ~= nil then
-    --    temporaryImg = love.graphics.newImage(drawable.filename)
+    --    temporaryImg = image.copy()
     --end
 
     sx = sx or 1
@@ -82,29 +84,38 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
     ox = ox or 0
     oy = oy or 0
 
-    local finalScaleX = sx * love.window.scaleX
-    local finalScaleY = sy * love.window.scaleY
-    local finalW = drawable:getWidth() * finalScaleX
-    local finalH = drawable:getHeight() * finalScaleY
+    local key = drawable.filename .. "|" .. sx .. "|" .. sy .. "|" .. r .. "|" .. ox .. "|" .. oy
 
-    image.resize(temporaryImg.imgData, finalW, finalH)
+    if not love.graphicsCache[key] then
+        local img = image.copy(drawable.imgData)
 
-    image.center(temporaryImg.imgData, ox, oy)
+        local finalScaleX = sx * love.window.scaleX
+        local finalScaleY = sy * love.window.scaleY
+        local finalW = drawable:getWidth() * finalScaleX
+        local finalH = drawable:getHeight() * finalScaleY
+
+        image.resize(img, finalW, finalH)
+
+        image.center(img, ox, oy)
+
+        if r ~= 0 then
+            image.rotate(img,(r/math.pi)*180) --radians to degrees
+        end
+
+        love.graphicsCache[key] = img
+    end
 
     --scale 1280x720 to 480x270(psp)
     --if lv1luaconf.imgscale == true or lv1luaconf.resscale == true then
     --    x = x * scale; y = y * scale
     --end
-    if r ~= 0 then
-        image.rotate(temporaryImg.imgData,(r/math.pi)*180) --radians to degrees
-    end
     
     --if sx then
     --    sy = sy or sx
     --    image.resize(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy)
     --end
     
-    image.blit(temporaryImg.imgData,x,y,color.a(lv1lua.current.color))
+    image.blit(love.graphicsCache[key],x,y,color.a(lv1lua.current.color))
 end
 
 function love.graphics.newFont(setfont, setsize)
