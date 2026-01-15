@@ -3,7 +3,10 @@ local defaultfont
 local scale = 0.375
 local fontscale = 0.6
 
-love.graphicsCache = {}
+love.graphics.graphicsCache = {
+    imgs = {},
+    uses = {}
+}
 
 local function sxF(x)
     return x * love.window.scaleX
@@ -86,7 +89,7 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
 
     local key = drawable.filename .. "|" .. sx .. "|" .. sy .. "|" .. r .. "|" .. ox .. "|" .. oy
 
-    if not love.graphicsCache[key] then
+    if not love.graphics.graphicsCache.imgs[key] then
         local img = image.copy(drawable.imgData)
 
         local finalScaleX = sx * love.window.scaleX
@@ -102,7 +105,7 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
             image.rotate(img,(r/math.pi)*180) --radians to degrees
         end
 
-        love.graphicsCache[key] = img
+        love.graphics.graphicsCache.imgs[key] = img
     end
 
     --scale 1280x720 to 480x270(psp)
@@ -115,7 +118,8 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
     --    image.resize(drawable, image.getrealw(drawable) * sx, image.getrealh(drawable) * sy)
     --end
     
-    image.blit(love.graphicsCache[key],x,y,color.a(lv1lua.current.color))
+    image.blit(love.graphics.graphicsCache.imgs[key],x,y,color.a(lv1lua.current.color))
+    love.graphics.graphicsCache.uses[key] = love.graphics.graphicsCache.uses[key] + 1
 end
 
 function love.graphics.newFont(setfont, setsize)

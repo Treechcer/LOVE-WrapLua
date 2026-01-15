@@ -61,7 +61,7 @@ function love.conf(t)
 end
 ```
 
-and your main.lua should have love.load(), love.update(dt) and love.graphics() and any other game logic. Identity is just the name of your gamem and cleanUp is time (in frames) that you'll automatically call graphical clean up on cache, it defaults to 2500 frames, you can change it to any frame count you want (I recommend having on some count at least but negative numbers should stop it from happening at all if you want that - you can technically call it yourself with `love.helpers.graphicsCleanUp()` if you want to manage the cache yourself).
+and your main.lua should have love.load(), love.update(dt) and love.graphics() and any other game logic. Identity is just the name of your gamem and cleanUp is time (in frames) that you'll automatically call graphical clean up on cache, it defaults to 2500 frames, you can change it to any frame count you want (I recommend having on some count at least but negative numbers should stop it from happening at all if you want that - you can technically call it yourself with `love.helpers.graphicsCleanUp()` or `love.helpers.fullGraphicsCleanUp()` if you want to manage the cache yourself).
 
 > NOTE: you can use more files, any kind of files you work with your game can be there this library can work with images from default, any other file type you have to write and work with.
 
@@ -70,6 +70,12 @@ Folder for LOVE-WrapLua should be the folder in this repository called the same 
 savedata\ should be initially empty folder (if you write files it saves it there).
 
 When you have modded PSP on your SD card you should see this folder folders like `PSP\GAME\...`, where you'll put your game folder. Which will be `PSP\GAME\your-game`. When you add your game it should be on your XMB and it should work.
+
+#### love.helpers.graphicsCleanUp() vs love.helpers.fullGraphicsCleanUp()
+
+love.helpers.graphicsCleanUp() has algorithm that tries to delete unused things, if it's used it'll not delete it. This is used when the automatic cache cleaning is active.
+
+love.helpers.fullGraphicsCleanUp() deletes ALL images, doesn't matter how much they're used, it'll just delete them.
 
 ### custom eboot.pbp
 
