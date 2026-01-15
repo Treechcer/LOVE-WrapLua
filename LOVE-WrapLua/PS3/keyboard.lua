@@ -6,14 +6,7 @@ lv1lua.key = {
 }
 
 function love.keyboard.isDown(key)
-    if  (pad.up(0)>0 and key=="up") or (pad.down(0)>0 and key=="down") or
-        (pad.left(0)>0 and key=="left") or (pad.right(0)>0 and key=="right") or
-        (pad.circle(0)>0 and key==lv1lua.keyset[1]) or (pad.cross(0)>0 and key==lv1lua.keyset[2]) or
-        (pad.triangle(0)>0 and key==lv1lua.keyset[3]) or (pad.square(0)>0 and key==lv1lua.keyset[4]) or
-        (pad.L1(0)>0 and key==lv1lua.keyset[5]) or (pad.R1(0)>0 and key==lv1lua.keyset[6]) or
-        (pad.select(0)>0 and key=="select") or (pad.start(0)>0 and key=="start") then
-        return true
-    end
+    return pad[key](0) > 0
 end
 
 function love.keyboard.showTextInput(table)

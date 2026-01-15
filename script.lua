@@ -129,6 +129,11 @@ if lv1lua.mode == "OneLua" then
         if param == "love" then
             return love
         end
+
+        param = string.gsub(param, "%.lua", "|||lua|||")
+        param = string.gsub(param, "%.", "/")
+        param = string.gsub(param, "|||lua|||", ".lua")
+
         return __oldRequire("game/"..param)
     end
 else
@@ -137,6 +142,10 @@ else
             return love
         end
         
+        param = string.gsub(param, "%.lua", "|||lua|||")
+        param = string.gsub(param, "%.", "/")
+        param = string.gsub(param, "|||lua|||", ".lua")
+
         if string.sub(param, -4) == ".lua" then
             param = lv1lua.dataloc.."game/"..param
         else
@@ -170,7 +179,6 @@ elseif not love.keyreleased then
     love.keyreleased = function() end
 end
 
-
 --Main loop
 while lv1lua.running do
     --Draw
@@ -182,8 +190,10 @@ while lv1lua.running do
     --Controls
     lv1lua.updatecontrols()
 
+    --Cache delete
+
     if lv1lua.lastClean >= lv1lua.cleanUp then
-        graphicsCleanUp()
+        love.helpers.graphicsCleanUp()
         lv1lua.lastClean = 0
     end
 

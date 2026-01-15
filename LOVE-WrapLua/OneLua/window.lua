@@ -12,7 +12,7 @@ love.window.scaleY = love.window.scaleY or 1
 
 function love.window.setMode(width, height, flags)
     --flags do nothing, it's more for compatibility thing
-    --the scaling is incorrect, idk why, I might fix it oneday
+    --it's compatibility thing not thing that does what it should yk
 
     width  = width  or love.window.width
     height = height or love.window.height

@@ -112,3 +112,7 @@ end
 function love.graphics.circle(x,y,radius)
     --Graphics.fillCircle(x,y,radius,lv1lua.current.color)
 end
+
+function love.graphics.setDefaultFilter(min, max, flags)
+    --does nothing, for compatibility, I'm not sure if you can really make it in this and eh, happens 
+end

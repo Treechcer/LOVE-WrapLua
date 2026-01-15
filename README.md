@@ -73,9 +73,9 @@ When you have modded PSP on your SD card you should see this folder folders like
 
 #### love.helpers.graphicsCleanUp() vs love.helpers.fullGraphicsCleanUp()
 
-love.helpers.graphicsCleanUp() has algorithm that tries to delete unused things, if it's used it'll not delete it. This is used when the automatic cache cleaning is active.
+`love.helpers.graphicsCleanUp()` has algorithm that tries to delete unused things, if it's used it'll not delete it. This is used when the automatic cache cleaning is active.
 
-love.helpers.fullGraphicsCleanUp() deletes ALL images, doesn't matter how much they're used, it'll just delete them.
+`love.helpers.fullGraphicsCleanUp()` deletes ALL images, doesn't matter how much they're used, it'll just delete them.
 
 ### custom eboot.pbp
 
