@@ -106,6 +106,7 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
         end
 
         love.graphics.graphicsCache.imgs[key] = img
+        love.graphics.graphicsCache.uses[key] = 0
     end
 
     --scale 1280x720 to 480x270(psp)
@@ -119,7 +120,8 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
     --end
     
     image.blit(love.graphics.graphicsCache.imgs[key],x,y,color.a(lv1lua.current.color))
-    love.graphics.graphicsCache.uses[key] = love.graphics.graphicsCache.uses[key] + 1
+    local a = love.graphics.graphicsCache.uses[key]
+    a = a + 1
 end
 
 function love.graphics.newFont(setfont, setsize)

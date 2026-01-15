@@ -21,7 +21,7 @@ love.system = {}
 love.filesystem = {}
 love.keyboard = {}
 love.window = {}
-
+love.helpers = {}
 --for checking conf files
 function lv1lua.exists(file)
     if lv1lua.mode == "OneLua" then
@@ -97,6 +97,11 @@ elseif lv1luaconf.keyconf == "PS" then
     lv1lua.keyset = {"circle","cross","triangle","square"}
 end
 
+dofile(lv1lua.dataloc.."LOVE-WrapLua/filesystem.lua")
+dofile(lv1lua.dataloc.."LOVE-WrapLua/math.lua")
+dofile(lv1lua.dataloc.."LOVE-WrapLua/system.lua")
+dofile(lv1lua.dataloc.."LOVE-WrapLua/helperFunctions.lua")
+
 --modules and stuff
 dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/window.lua")
 dofile(lv1lua.dataloc.."LOVE-WrapLua/OneLua/joystick.lua")
@@ -112,10 +117,6 @@ dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/timer.lua")
 dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/audio.lua")
 dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/event.lua")
 dofile(lv1lua.dataloc.."LOVE-WrapLua/"..lv1lua.mode.."/keyboard.lua")
-dofile(lv1lua.dataloc.."LOVE-WrapLua/filesystem.lua")
-dofile(lv1lua.dataloc.."LOVE-WrapLua/math.lua")
-dofile(lv1lua.dataloc.."LOVE-WrapLua/system.lua")
-dofile(lv1lua.dataloc.."LOVE-WrapLua/helperFunctions.lua")
 
 --return LOVE 0.10.2
 function love.getVersion()
