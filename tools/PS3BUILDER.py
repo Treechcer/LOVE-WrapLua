@@ -69,4 +69,5 @@ if os.path.exists(driveInput + ":\\"):
 
     print(driveInput + ":\\" + name)
 
-    #copyFilesFromDir(driveInput + ":\\" + name)
+    copyFilesFromDir(driveInput + ":\\" + name)
+    goThroughDir(driveInput + ":\\" + name)
