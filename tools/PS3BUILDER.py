@@ -28,7 +28,7 @@ def goThroughDir(dire = curDir):
 
 def copyFilesFromDir(drive, dire = curDir):
     for item in os.listdir(dire):
-        if item == ".git":
+        if item == ".git" or item == "app.lua":
             continue
 
         fullPath = os.path.join(dire, item)
@@ -68,6 +68,6 @@ if os.path.exists(driveInput + ":\\"):
                     shutil.copy("app.lua", driveInput + ":\\")
 
     print(driveInput + ":\\" + name)
-
     copyFilesFromDir(driveInput + ":\\" + name)
     goThroughDir(driveInput + ":\\" + name)
+    os.makedirs(driveInput + ":\\" + name + "\savedata\\", exist_ok=True)
