@@ -7,23 +7,27 @@ lv1lua.current = {font=defaultfont,color=nil}
 
 function love.graphics.newImage(filename)
     local img = surface()
-    local imgObj = {}
+    local imgObj = {
+        imgData = nil,
+        h = 0,
+        w = 0,
+    }
     img:LoadIMG(lv1lua.dataloc.."game/"..filename)
 
-    local a = require(filename:gsub("%.png", ".lua"))
-    imgObj.h = a.height
-    imgObj.w = a.width
+    local a = dofile(lv1lua.dataloc.."game/"..filename:gsub("%.png", ".lua"))
+    imgObj.h = a.h
+    imgObj.w = a.w
 
     imgObj.imgData = img
     function imgObj:getWidth ()
         --doesn't seem possible to know the image size so it sucks yk
         --that's why there's PS3BUILDER.py in .\tools, that'll make these functions work
 
-        return self.width
+        return self.w
     end
 
     function imgObj:getHeight ()
-        return self.height
+        return self.h
     end
 
     return imgObj
