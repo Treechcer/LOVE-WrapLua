@@ -10,14 +10,20 @@ function love.graphics.newImage(filename)
     local imgObj = {}
     img:LoadIMG(lv1lua.dataloc.."game/"..filename)
 
+    local a = require(filename:gsub("%.png", ".lua"))
+    imgObj.h = a.height
+    imgObj.w = a.width
+
     imgObj.imgData = img
     function imgObj:getWidth ()
         --doesn't seem possible to know the image size so it sucks yk
-        --return self.imgData
+        --that's why there's PS3BUILDER.py in .\tools, that'll make these functions work
+
+        return self.width
     end
 
     function imgObj:getHeight ()
-        --return self.imgData
+        return self.height
     end
 
     return imgObj
