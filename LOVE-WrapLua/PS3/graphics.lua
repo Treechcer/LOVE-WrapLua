@@ -7,11 +7,24 @@ lv1lua.current = {font=defaultfont,color=nil}
 
 function love.graphics.newImage(filename)
     local img = surface()
+    local imgObj = {}
     img:LoadIMG(lv1lua.dataloc.."game/"..filename)
-    return img
+
+    imgObj.imgData = img
+    function imgObj:getWidth ()
+        --doesn't seem possible to know the image size so it sucks yk
+        --return self.imgData
+    end
+
+    function imgObj:getHeight ()
+        --return self.imgData
+    end
+
+    return imgObj
 end
 
 function love.graphics.draw(drawable,x,y,r,sx,sy)
+    local draw = drawable.imgData
     if not x then x = 0 end
     if not y then y = 0 end
     if not r then r = 0 end
@@ -28,9 +41,9 @@ function love.graphics.draw(drawable,x,y,r,sx,sy)
         sy = sy * 0.5625
     end
     
-    if drawable then
-        drawable:setRectPos(x,y)
-        BlitToScreen(drawable)
+    if draw then
+        draw:setRectPos(x,y)
+        BlitToScreen(draw)
     end
 end
 
