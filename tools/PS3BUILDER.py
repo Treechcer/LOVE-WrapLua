@@ -1,6 +1,7 @@
 from PIL import Image
 import os
 import re
+import math
 
 global curDir
 
@@ -25,4 +26,26 @@ def goThroughDir(dire = curDir):
         elif not os.path.isfile(fullPath):
             goThroughDir(fullPath)
 
-goThroughDir()
+def copyFilesFromDir(drive, dire = curDir):
+    for item in os.listdir(dire):
+        fullPath = os.path.join(dire, item)
+        os.rename(fullPath, drive + item)
+
+def getInputValue(correctInputs, message, typeF = str):
+    while True:
+        i = typeF(input(message).strip())
+
+        if i in correctInputs:
+            return i
+
+def deDriveDrives(drives):
+    for i in range(len(drives)):
+        drives[i] = re.sub(r":\\", "", drives[i])
+
+    return drives
+
+drives = deDriveDrives(os.listdrives())
+driveInput = getInputValue(drives, "Which of these drive letters is your PS3 USB?: " + str(drives) + ": ")
+
+if os.path.exists(driveInput + ":\\"):
+    copyFilesFromDir(driveInput + ":\\")
