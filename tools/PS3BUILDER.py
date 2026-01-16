@@ -1,7 +1,7 @@
 from PIL import Image
 import os
 import re
-import math
+import shutil
 
 global curDir
 
@@ -28,8 +28,16 @@ def goThroughDir(dire = curDir):
 
 def copyFilesFromDir(drive, dire = curDir):
     for item in os.listdir(dire):
+        if item == ".git":
+            continue
+
         fullPath = os.path.join(dire, item)
-        os.rename(fullPath, drive + item)
+
+        if os.path.isfile(fullPath):
+            os.makedirs(drive, exist_ok=True)
+            shutil.copy(fullPath, os.path.join(drive, item))
+        elif not os.path.isfile(fullPath):
+            copyFilesFromDir(os.path.join(drive, item), fullPath)
 
 def getInputValue(correctInputs, message, typeF = str):
     while True:
@@ -48,4 +56,17 @@ drives = deDriveDrives(os.listdrives())
 driveInput = getInputValue(drives, "Which of these drive letters is your PS3 USB?: " + str(drives) + ": ")
 
 if os.path.exists(driveInput + ":\\"):
-    copyFilesFromDir(driveInput + ":\\")
+
+    if os.path.exists("app.lua"):
+        with open("app.lua", "r") as file:
+            lines = file.readlines()
+            for line in lines:
+                search = re.match("^lv1lua.dataloc = \"(.+)\"", line)
+                if search:
+                    name = re.sub("/dev_usb/", "",search.group(1))
+                    name = name[0:-1] + "\\"
+                    shutil.copy("app.lua", driveInput + ":\\")
+
+    print(driveInput + ":\\" + name)
+
+    #copyFilesFromDir(driveInput + ":\\" + name)
