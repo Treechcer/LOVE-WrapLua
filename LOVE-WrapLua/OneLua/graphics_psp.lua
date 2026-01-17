@@ -87,6 +87,10 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
     ox = ox or 0
     oy = oy or 0
 
+
+    r = r / math.pi * 180
+    r = r % 360
+
     local key = drawable.filename .. "|" .. sx .. "|" .. sy .. "|" .. r .. "|" .. ox .. "|" .. oy
 
     if not love.graphics.graphicsCache.imgs[key] then
@@ -97,13 +101,14 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
         local finalW = drawable:getWidth() * finalScaleX
         local finalH = drawable:getHeight() * finalScaleY
 
-        image.resize(img, finalW, finalH)
-
         image.center(img, ox, oy)
 
         if r ~= 0 then
-            image.rotate(img,(r/math.pi)*180) --radians to degrees
+            image.rotate(img, r) --radians to degrees
         end
+
+        --image.resize(img, finalW, finalH)
+        --when I remove the scale it rotates correctly?????
 
         love.graphics.graphicsCache.imgs[key] = img
         love.graphics.graphicsCache.uses[key] = 0
@@ -120,8 +125,7 @@ function love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy)
     --end
     
     image.blit(love.graphics.graphicsCache.imgs[key],x,y,color.a(lv1lua.current.color))
-    local a = love.graphics.graphicsCache.uses[key]
-    a = a + 1
+    love.graphics.graphicsCache.uses[key] = love.graphics.graphicsCache.uses[key] + 1
 end
 
 function love.graphics.newFont(setfont, setsize)
